@@ -1,5 +1,5 @@
-from .matrix import Matrix, MatrixMultiplication, Transpose, ValidMatrix
-from .vector import DotProduct, Norm, Vector
+from matrix import Matrix, MatrixMultiplication, Transpose, ValidMatrix
+from vector import DotProduct, Norm, Vector
 
 
 def compute_mean(A: Matrix) -> Vector:
@@ -33,7 +33,7 @@ def center_data(Data: Matrix, Mean: Vector) -> Matrix:
 
 def covariance(A:Matrix)->Matrix:
     AT=Transpose(A)
-    C=MatrixMultiplication(AT,A)
+    C=MatrixMultiplication(A,AT)
     M=len(A)
     for i in range(len(C)):
         for j in range(len(C[0])):

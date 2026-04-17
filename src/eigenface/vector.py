@@ -32,3 +32,9 @@ def VectorSubstract(a:Vector, b:Vector)-> Vector:
 		result.append(a[i]-b[i])
 
 	return result
+
+def VectorDivisionScalar(v:Vector, s:int):
+    result=[]
+    for i in range(len(v)):
+        result.append(v[i]/s)
+    return result

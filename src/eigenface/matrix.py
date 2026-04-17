@@ -1,4 +1,4 @@
-from .vector import Vector
+from vector import Vector
 
 Matrix = list[list[float]]
 
@@ -75,3 +75,9 @@ def MatrixVectorMultiplication(A: Matrix, v: Vector) -> Vector:
 			y[i]=y[i]+A[i][j] * v[j]
 
 	return y
+
+def identitymatrix(size:int):
+    I=[[0 for c in range(size)] for r in range(size)]
+    for i in range(size):
+        I[i][i]=1
+    return I
