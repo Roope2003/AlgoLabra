@@ -1,7 +1,10 @@
-from matrix import Matrix, MatrixMultiplication, Transpose, MatrixVectorMultiplication
-from vector import DotProduct, Norm, Vector, Normalize, VectorSubstract
-from QR import eigendecompose
 from math import sqrt
+from eigenface.qr import eigendecompose
+from eigenface.matrix import Matrix, matrix_multiplication, transpose, matrix_vector_multiplication
+from eigenface.vector import dot_product, norm, Vector, normalize, vector_substract
+
+# pylint: disable=invalid-name
+
 def compute_mean(A: Matrix) -> Vector:
 
     rows = len(A)
@@ -32,18 +35,19 @@ def center_data(Data: Matrix, Mean: Vector) -> Matrix:
 
 
 def covariance(A:Matrix)->Matrix:
-    AT=Transpose(A)
-    C=MatrixMultiplication(A,AT)
+    AT=transpose(A)
+    C=matrix_multiplication(A,AT)
     M=len(A)
-    for i in range(len(C)):
-        for j in range(len(C[0])):
-            C[i][j] = C[i][j]/ M
+    for i, row in enumerate(C):
+        for j, val in enumerate(row):
+            C[i][j] = val / M
 
     return C
 
 
 
 def train_eigenfaces(A:Matrix, k:int, iterations:int, tolerance:float):
+    # pylint: disable=too-many-locals
     mean=compute_mean(A)
     center=center_data(A,mean)
     L=covariance(center)
@@ -51,14 +55,16 @@ def train_eigenfaces(A:Matrix, k:int, iterations:int, tolerance:float):
 
     valid_eigenvalues=[]
     valid_eigenvectors=[]
-    center_transpose=Transpose(center)
-    for i in range(len(eigenvectors)):
-        v_i=MatrixVectorMultiplication(center_transpose,eigenvectors[i])
+    center_transpose=transpose(center)
 
-        if Norm(v_i) > 0:
-            v_i_normalized=Normalize(v_i)
+    for i, vector in enumerate(eigenvectors):
+        v_i = matrix_vector_multiplication(center_transpose, vector)
+
+        if norm(v_i) > 0:
+            v_i_normalized = normalize(v_i)
             valid_eigenvalues.append(eigenvalues[i])
             valid_eigenvectors.append(v_i_normalized)
+
     k_eff=min(k,len(valid_eigenvectors))
     top_eigenvalues=valid_eigenvalues[:k_eff]
     top_eigenvectors=valid_eigenvectors[:k_eff]
@@ -68,16 +74,16 @@ def train_eigenfaces(A:Matrix, k:int, iterations:int, tolerance:float):
         image_weight=[]
 
         for eigenface in top_eigenvectors:
-            image_weight.append(DotProduct(eigenface,image))
+            image_weight.append(dot_product(eigenface,image))
         train_weights.append(image_weight)
     return mean, top_eigenvalues, top_eigenvectors, train_weights
 
 
 def predict_face(image:Vector, mean:Vector,top_eigenfaces:Matrix):
-    centered_image=VectorSubstract(image,mean)
+    centered_image=vector_substract(image,mean)
     image_weight=[]
     for eigenface in top_eigenfaces:
-        image_weight.append(DotProduct(eigenface,centered_image))
+        image_weight.append(dot_product(eigenface,centered_image))
     return image_weight
 
 def euclidean_distance(vector1, vector2):
@@ -95,10 +101,10 @@ def euclidean_distance(vector1, vector2):
 def nearest_neighbor(image_weight:Vector, train_weights:Matrix):
     nearest_dist=float("inf")
     best_index=-1
+    for i, weight in enumerate(train_weights):
+        current_dist = euclidean_distance(weight, image_weight)
+        if current_dist < nearest_dist:
+            nearest_dist = current_dist
+            best_index = i
 
-    for i in range(len(train_weights)):
-        current_dist=euclidean_distance(train_weights[i],image_weight)
-        if current_dist< nearest_dist:
-            nearest_dist=current_dist
-            best_index=i
-    return (best_index,nearest_dist)
+    return best_index, nearest_dist

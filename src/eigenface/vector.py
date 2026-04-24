@@ -1,40 +1,41 @@
 Vector = list[float]
 
 
-def DotProduct(a: Vector, b: Vector) -> float:
-	if len(a) != len(b):
-		raise ValueError("Vectors are of different sizes")
+def dot_product(a: Vector, b: Vector) -> float:
+    if len(a) != len(b):
+        raise ValueError("Vectors are of different sizes")
+    summa = 0.0
+    for index, value in enumerate(a):
+        summa = summa + value * b[index]
 
-	summa = 0.0
-	for i in range(len(a)):
-		summa = summa + a[i] * b[i]
+    return summa
 
-	return summa
 
-def Norm(a: Vector) ->float:
-	return DotProduct(a, a) ** 0.5
+def norm(a: Vector) -> float:
+    return dot_product(a, a) ** 0.5
 
-def Normalize(v: Vector) -> Vector:
-    n = Norm(v)
+
+def normalize(v: Vector) -> Vector:
+    n = norm(v)
     if n == 0:
         raise ValueError("Cannot normalize zero vector")
-    normalized: Vector = []
-    for i in range(len(v)):
-        normalized.append(v[i] / n)
+    normalized: Vector = [i / n for i in v]
+
     return normalized
 
 
-def VectorSubstract(a:Vector, b:Vector)-> Vector:
-	if len(a) != len(b):
-		raise ValueError("Vectors are of different sizes")
-	result=[]
-	for i in range(len(a)):
-		result.append(a[i]-b[i])
+def vector_substract(a: Vector, b: Vector) -> Vector:
+    if len(a) != len(b):
+        raise ValueError("Vectors are of different sizes")
+    result = []
+    for index, value in enumerate(a):
+        result.append(value - b[index])
 
-	return result
+    return result
 
-def VectorDivisionScalar(v:Vector, s:int):
-    result=[]
-    for i in range(len(v)):
-        result.append(v[i]/s)
+
+def vector_division_scalar(v: Vector, s: int):
+    result = []
+    for _, value in enumerate(v):
+        result.append(value / s)
     return result
