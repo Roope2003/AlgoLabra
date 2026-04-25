@@ -1,8 +1,8 @@
 from os import listdir
 from os.path import join, isfile
 from PIL import Image
-from .vector import Vector
-from .matrix import Matrix
+from eigenface.vector import Vector
+from eigenface.matrix import Matrix
 
 
 def load_dataset(folder_path: str, height: int, width: int):

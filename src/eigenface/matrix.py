@@ -1,4 +1,4 @@
-from .vector import Vector
+from eigenface.vector import Vector
 
 Matrix = list[list[float]]
 # pylint: disable=invalid-name

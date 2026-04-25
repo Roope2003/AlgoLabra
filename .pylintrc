@@ -14,7 +14,11 @@ ignore=CVS,ui,tests
 
 # Add files or directories matching the regex patterns to the blacklist. The
 # regex matches against base names, not paths.
-ignore-patterns=
+# Posted by RyoJerryYu, modified by community. See post 'Timeline' for change history
+# Retrieved 2026-04-25, License - CC BY-SA 4.0
+
+ignore-patterns=(.)*_test\.py,test_(.)*\.py
+
 
 # Python code to execute, usually for sys.path manipulation such as
 # pygtk.require().
