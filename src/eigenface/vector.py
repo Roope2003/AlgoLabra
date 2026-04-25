@@ -35,6 +35,8 @@ def vector_substract(a: Vector, b: Vector) -> Vector:
 
 
 def vector_division_scalar(v: Vector, s: int):
+    if s == 0:
+        raise ValueError("Cannot divide vector by zero")
     result = []
     for _, value in enumerate(v):
         result.append(value / s)

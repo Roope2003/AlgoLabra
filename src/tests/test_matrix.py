@@ -32,6 +32,9 @@ def test_matrix_multiplication_incombatible_raises():
     with pytest.raises(ValueError):
         matrix_multiplication([[1.0, 2.0]], [[1.0, 2.0]])
 
+def test_matrix_mutliplication_invalid_matrix_raises():
+    with pytest.raises(ValueError):
+        matrix_multiplication([],[[2.0]])
 
 def test_matrix_vector_multiplication_basic():
     X = [[1.0, 2.0], [3.0, 4.0]]
@@ -44,6 +47,10 @@ def test_matrix_vector_multiplication_wrong_size_raises():
         X = [[1.0, 2.0, 6.0], [3.0, 4.0, 6.0], [8.0, 9.0, 6.0]]
         v= [2.0, 1.0]
         matrix_vector_multiplication(X,v)
+
+def test_matrix_vector_multiplication_invalid_matrix_raises():
+    with pytest.raises(ValueError):
+        matrix_vector_multiplication([[1.0, 2.0], [1.0]], [1.0, 2.0])
 
 def test_identity_matrix():
     result = identitymatrix(3)

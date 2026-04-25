@@ -26,8 +26,12 @@ def qr_decompose(A: Matrix):
             v = vector_substract(v, [R[i][j] * x for x in q_i])
 
         R[j][j] = norm(v)  # lasketaan normi eli vektorin pituus
-        # Tehdaan uudesta v:sta yksikkovektori eli normalisoidaan.
-        q_j = vector_division_scalar(v, R[j][j])
+        # lineaarisesti riippuva sarake asetetaan nollaksi
+        if R[j][j] == 0:
+            q_j = [0.0 for _ in range(rows)]
+        else:
+            # Tehdaan uudesta v:sta yksikkovektori eli normalisoidaan.
+            q_j = vector_division_scalar(v, R[j][j])
 
         for r in range(rows):
             Q[r][j] = q_j[r]  # asetetaan q_j Q:n j:nnelle sarakkeelle

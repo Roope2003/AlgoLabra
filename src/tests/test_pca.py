@@ -39,6 +39,15 @@ def test_train_eigenfaces_empty_data_raises():
     with pytest.raises(Exception):
         train_eigenfaces([], k=2, iterations=10, tolerance=1e-5)
 
+def test_train_eigenfaces_skips_zero_norm_vector():
+    data = [[1.0, 1.0], [1.0, 1.0], [1.0, 1.0]]
+    mean, eigenvalues, eigenfaces, train_weights =train_eigenfaces(data, k=2, iterations=30, tolerance=1e-5)
+    assert mean == pytest.approx([1.0, 1.0])
+    assert eigenvalues == []
+    assert eigenfaces == []
+    assert len(train_weights) == 3
+    assert train_weights == [[], [], []]
+
 
 def test_predict_face_with_nonzero_mean():
     image = [5.0, 7.0]

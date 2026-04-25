@@ -35,3 +35,7 @@ def test_vector_substract_size_mismatch():
 def test_vector_division_scalar_basic():
     result = vector_division_scalar([6.0, 3.0], 3)
     assert result == pytest.approx([2.0, 1.0])
+
+def test_vector_division_scalar_zero_raises():
+    with pytest.raises(ValueError):
+        vector_division_scalar([6.0, 3.0], 0)
