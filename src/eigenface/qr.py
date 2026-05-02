@@ -1,3 +1,8 @@
+"""Ominaisarvojen laskemisen apufunktiot Eigenface algoritmille.
+
+Moduuli sisältää QR-dekomposition ja ominaisarvohajotelman funktiot
+"""
+
 from math import sqrt
 from eigenface.matrix import Matrix, matrix_multiplication, transpose, identitymatrix
 from eigenface.vector import dot_product, norm, vector_substract, vector_division_scalar
@@ -5,11 +10,20 @@ from eigenface.vector import dot_product, norm, vector_substract, vector_divisio
 # pylint: disable=invalid-name
 
 
-def qr_decompose(A: Matrix):
+def qr_decompose(A: Matrix)->tuple[Matrix,Matrix]:
+    """Laskee QR dekomposition annetulle matriisille
+
+    Args:
+        A (Matrix): Matriisi
+
+    Returns:
+        tuple[Matrix,Matrix]: tuple(Q, R) Q on otronormaali vektori, R on yläkolmio matriisi
+    """
+
     rows = len(A)
     cols = len(A[0])
 
-    # Q on matriisi johon tulee orthonormaalit sarake vektoriy.
+    # Q on matriisi johon tulee orthonormaalit sarake vektorit.
     Q = [[0 for c in range(cols)] for r in range(rows)]
     # R on matriisi josta tulee yläkolmio matriisi.
     R = [[0 for c in range(cols)] for c in range(cols)]
@@ -38,7 +52,18 @@ def qr_decompose(A: Matrix):
 
     return Q, R
 
-def eigendecompose(A: Matrix, iterations: int, toleranssi: float):
+def eigendecompose(A: Matrix, iterations: int, toleranssi: float)-> tuple[list, Matrix]:
+    """Laskee ominaisarvot ja vektorit annetulle matriisille
+
+    Args:
+        A (Matrix):
+        iterations (int): kuinka monesti QR dekompositio suoritetaan
+        toleranssi (float): jos iteraatioiden muutos on alle luvun, iteroiminen voidaan lopettaa
+
+    Returns:
+        tuple[list, Matrix]:  tuple, jossa on lista ominaisarvoja ja matriisi ominaisvektoreista
+    """
+
     # pylint: disable=too-many-locals,too-many-nested-blocks
     rows = len(A)
     cols = len(A[0])

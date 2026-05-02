@@ -1,3 +1,7 @@
+"""Kuvien lataamisen funktiot Eigenface algoritmille
+
+Moduuli sisältää funktiot kuvien lataamiseen kansioista ja niiden muuntamiseen vektoreiksi."""
+
 from os import listdir
 from os.path import join, isfile, isdir, splitext
 from PIL import Image
@@ -7,8 +11,21 @@ from eigenface.matrix import Matrix
 
 SUPPORTED_FILES = {".pgm", ".png", ".jpg", ".jpeg", ".bmp"}
 
+def load_dataset(folder_path: str, height: int, width: int)-> Matrix:
+    """Lataa ja muotoilee kuvat annetusta kansiosta
 
-def load_dataset(folder_path: str, height: int, width: int):
+    Args:
+        folder_path (str): Polku kansioon jossa on kuvat
+        height (int): leveys johon kuvat muotoillaan
+        width (int): pituus johon kuvat muotoillaan
+
+    Raises:
+        ValueError: Jos kansiosta ei löydy kuvia
+
+    Returns:
+        Matrix:  matriisi jossa jokainen vektori on normalisoitu kuva
+    """
+
     matrix: Matrix = []
     for folder in listdir(folder_path):
         filepath = join(folder_path, folder)
@@ -28,7 +45,18 @@ def load_dataset(folder_path: str, height: int, width: int):
     return matrix
 
 
-def load_image_as_vector(image_path: str, height: int, width: int):
+def load_image_as_vector(image_path: str, height: int, width: int)-> Vector:
+    """Lataa kuvan ja muttaa sen normalisoiduksi vektoriksi
+
+    Args:
+        image_path (str): polku kuvatiedostoon
+        height (int): korkeus johon kuva muotoillaan
+        width (int): leveys johon kuva muotoillaan
+
+    Returns:
+        Vector: vektori joka koostuu kuvan normalisoiduista pikseliarvoista välillä 0-1
+    """
+
     with Image.open(image_path) as img:
         img = img.convert("L")
         img = img.resize((width, height))

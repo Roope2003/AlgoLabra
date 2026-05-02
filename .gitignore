@@ -10,3 +10,17 @@ env.bak/
 venv.bak/
 .pgm
 
+
+
+src/eigenface/data/*
+!src/eigenface/data/README.md
+
+src/eigenface/models/*
+!src/eigenface/models/README.md
+
+src/.vscode/
+src/eigenface_model.json
+
+
+.vscode/
+eigenface_model.json

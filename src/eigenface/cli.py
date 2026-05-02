@@ -1,7 +1,14 @@
+"""Command line interface Eigenface algoritmin testaukseen.
+
+Moduuli sisältää komennot mallin koulutukseen ja kasvojen tunnistukseen."""
+
+
+
 import argparse
 import time
 import json
 from pathlib import Path
+#pylint: skip-file
 from eigenface.dataset import load_dataset, load_image_as_vector
 from eigenface.pca import train_eigenfaces, predict_face, nearest_neighbor
 

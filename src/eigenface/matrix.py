@@ -1,3 +1,9 @@
+"""Matriisilaskennan perusoperaatiot Eigenface algoritmille.
+
+Moduuli sisältää matriisien validoinnin, transponoinnin, matriisikertolaskun,
+matriisi-vektori-kertolaskun ja identiteettimatriisin luonnin.
+"""
+
 from eigenface.vector import Vector
 
 Matrix = list[list[float]]
@@ -5,6 +11,15 @@ Matrix = list[list[float]]
 
 
 def valid_matrix(A: Matrix) -> bool:
+    """Tarkistaa onko annettu matriisi kelvollinen
+
+    Args:
+        A (Matrix): Matriisi jota tarkistetaan
+
+    Returns:
+        bool: True, jos matriisi on kelvollinen. Muuten False
+    """
+
     if len(A) == 0:
         return False
     if len(A[0]) == 0:
@@ -19,6 +34,18 @@ def valid_matrix(A: Matrix) -> bool:
 
 
 def transpose(A: Matrix) -> Matrix:
+    """Laskee matriisin transpoosin
+
+    Args:
+        A (Matrix): Transponitava matriisi
+
+    Raises:
+        ValueError: Jos annettu matriisi ei ole kelvollinen
+
+    Returns:
+        Matrix: Uusi matriisi jonka rivit ja sarakkeet ovat vaihtuneet
+    """
+
     if not valid_matrix(A):
         raise ValueError("Invalid matrix")
 
@@ -36,6 +63,20 @@ def transpose(A: Matrix) -> Matrix:
 
 
 def matrix_multiplication(A: Matrix, B: Matrix) -> Matrix:
+    """Laskee kahden matriisin välisen tulon
+
+    Args:
+        A (Matrix): ensimmäinen matriisi
+        B (Matrix): toinen matriisi
+
+    Raises:
+        ValueError: Jos jompikumpi matriisi ei ole kelvollinen
+        ValueError: JOs matriisiin dimensiot eivät sovi kertolaskuun
+
+    Returns:
+        Matrix: Matriisitulon A * B
+    """
+
     if not valid_matrix(A) or not valid_matrix(B):
         raise ValueError("Invalid matrix")
 
@@ -61,6 +102,20 @@ def matrix_multiplication(A: Matrix, B: Matrix) -> Matrix:
 
 
 def matrix_vector_multiplication(A: Matrix, v: Vector) -> Vector:
+    """Laskee matriisin ja vektorin välisen kertolaskun A*v
+
+    Args:
+        A (Matrix): Matriisi
+        v (Vector): vektori
+
+    Raises:
+        ValueError: Jos matriisi ei ole kelvollinen
+        ValueError: Jos vektorin pituus ei ole sama kuin matriisin sarakkeiden määrä
+
+    Returns:
+        Vector: tulosvektori
+    """
+
     if not valid_matrix(A):
         raise ValueError("Invalid matrix")
 
@@ -79,7 +134,16 @@ def matrix_vector_multiplication(A: Matrix, v: Vector) -> Vector:
     return y
 
 
-def identitymatrix(size: int):
+def identitymatrix(size: int) -> Matrix:
+    """Luo annetun kokoisen identiteettimatriisiin
+
+    Args:
+        size (int): kertoo matriisin rivien ja sarakkeiden määrän
+
+    Returns:
+        Matrix: size x size kokoinen identiteetti matriisi
+    """
+
     I = [[0 for c in range(size)] for r in range(size)]
     for i in range(size):
         I[i][i] = 1

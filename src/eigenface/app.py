@@ -17,8 +17,9 @@ if __name__ == "__main__":
     start = time.time()
 
     print("Loading training images")
-    test_matrix, train_matrix = load_dataset(folder_path, heigth, width)
+    train_matrix = load_dataset(folder_path, heigth, width)
     training_matrix = train_matrix
+    test_matrix=train_matrix[-1]
     print(f"Succesfully loaded {len(training_matrix)} amount of training images and {
         len(test_matrix)} of testing images")
 
