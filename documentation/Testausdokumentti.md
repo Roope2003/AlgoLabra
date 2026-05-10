@@ -75,3 +75,36 @@ Ja raportti saadaan komennolla:
 ```
 coverage report -m
 ```
+
+
+---
+## Datan testaus
+
+Ohjelmassa on komento:
+
+```bash
+poetry run python3 -m eigenface.cli evaluate
+```
+
+Komento käyttää jokaisen datasetin kansion ensimmäistä kuvaa testikuvana ja vertailee sitä koulutusdataan. Jokaiselle testikuvalle etsitään lähin vastaava kuva koulutusdatasta.
+
+Suositellaan ajamaan komento parametrilla:
+
+```bash
+--open
+```
+
+Tällöin ohjelma avaa testikuvan ja sitä lähimmän koulutuskuvan vierekkäin, jolloin algoritmin toimintaa voidaan tarkastella visuaalisesti.
+
+Eli:
+
+```bash
+poetry run python3 -m eigenface.cli evaluate --open
+```
+
+Kun ohjelmaa testattiin sivuston  
+https://cam-orl.co.uk/facedatabase.html  
+datalla, algoritmi tunnisti onnistuneesti jokaiselle testikuvalle oikean henkilön koulutusdatasta.
+
+
+
