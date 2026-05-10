@@ -1,4 +1,7 @@
 # AlgoLabra
+Harjoitustyö kurssille *Aineopintojen harjoitustyö: Algoritmit ja tekoäly*, Helsingin yliopisto.
+
+Työssä on toteutettu kasvojentunnistus Eigenface-menetelmällä.
 
 
 ## Dokumentaatio
